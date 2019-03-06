@@ -1,7 +1,7 @@
 /*
 Author      : Aithra Junia Bouty
 NPM         : 140810180054
-Deskripsi   : Membuat stuct pegawai dengan rata2 gaji, gaji tertinggi, gaji terendah
+Deskripsi   : Membuat struct pegawai dengan rata2 gaji, gaji tertinggi, gaji terendah
 Tahun       : 2019
 */
 
@@ -11,13 +11,14 @@ using namespace std;
 
 struct Pegawai{
     char nama[30];
-    char nip[20];
+    int nip;
     int gol;
     int gaji;
 };
 
 typedef Pegawai LarikPgw[10];
 void inputPegawai(LarikPgw& pgw, int& n);
+void sortingNIP(LarikPgw pgw, int n);
 void cariGaji(LarikPgw pgw, int n);
 void rataGaji(LarikPgw& pgw, int n, int& rata);
 void sortingGol(LarikPgw pgw, int n);
@@ -72,6 +73,18 @@ void inputPegawai(LarikPgw& pgw, int& n){
     }
 }
 
+void sortingNIP(LarikPgw pgw, int n){
+	Pegawai temp;
+	for(int i=1; i<n; i++){
+        temp = pgw[i];
+        while(i>0 && pgw[i-1].nip>temp.nip){
+            pgw[i] = pgw[i-1];
+            i = i-1;
+        }
+        pgw[i]= temp;
+    }
+}
+
 void cariGaji(LarikPgw pgw, int n){
     for(int i=0;i<n;i++){
         if(pgw[i].gol==1){
@@ -122,6 +135,7 @@ void gajiTertinggi(LarikPgw pgw, int n){
 
 void cetakDaftar(LarikPgw pgw, int n){
     cariGaji(pgw,n);
+    sortingNIP(pgw,n);
     for(int i=0;i<n;i++){
         cout << "Nip    : " << pgw[i].nip << endl;
         cout << "Nama   : " << pgw[i].nama << endl;
